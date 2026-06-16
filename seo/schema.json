@@ -1,0 +1,86 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Dentist",
+      "@id": "https://www.orthodontistnagpur.com/#dentist",
+      "name": "Dr. Suryawanshi's Orthodontic & Dental Speciality Clinic",
+      "url": "https://www.orthodontistnagpur.com/",
+      "logo": "https://www.orthodontistnagpur.com/assets/images/logo2-1.png",
+      "image": "https://www.orthodontistnagpur.com/assets/images/inner-banner2.jpg",
+      "description": "Premium Orthodontic & Dental clinic in Nagpur specializing in Invisalign aligners, ceramic & metal braces, dental implants and root canals.",
+      "telephone": "+91 79720 67931",
+      "email": "spriyas@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "17, 1st Floor, Kamal-Keshav Business Plaza, Lokmat Square, Ramdaspeth",
+        "addressLocality": "Nagpur",
+        "addressRegion": "Maharashtra",
+        "postalCode": "440010",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "21.1378875",
+        "longitude": "79.0768222"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "10:30",
+          "closes": "16:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/",
+        "https://www.instagram.com/drpriyanka_suryawanshi"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.orthodontistnagpur.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the correct age to get orthodontic treatment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Orthodontic correction can be performed at any age. The American Association of Orthodontists recommends a child's first screening by age 7, but adult corrections are highly successful using modern cosmetic solutions like clear aligners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Invisalign cost in Nagpur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cost of Invisalign clear aligners depends on the complexity of alignment needed and duration. We offer flexible zero-interest monthly installment plans to make clear aligner treatments affordable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are clear aligners completely pain-free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clear aligners apply controlled gentle pressure to reposition teeth. Some initial tightness is expected on wearing a new tray set, but it is highly comfortable and does not irritate oral tissues compared to metal brackets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does the braces treatment usually take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most standard orthodontic corrections take between 12 to 24 months. Mild spacing or crowding cases using clear aligners can often be successfully completed in 6 to 9 months."
+          }
+        }
+      ]
+    }
+  ]
+}
