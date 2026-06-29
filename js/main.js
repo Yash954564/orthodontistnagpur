@@ -39,6 +39,30 @@
           header.classList.remove('scrolled');
         }
       }
+
+      // Parallax scroll effects for visual depth
+      const scrolled = window.scrollY;
+      const heroLeft = document.querySelector('.hero-left');
+      if (heroLeft && window.innerWidth > 768) {
+        heroLeft.style.transform = `translateY(${scrolled * 0.15}px)`;
+      }
+
+      const canvas = document.getElementById('bg-canvas');
+      if (canvas) {
+        if (window.innerWidth > 768) {
+          canvas.style.transform = `translateY(${scrolled * 0.22}px)`;
+        }
+        
+        // Hide fixed 3D canvas in Hero section to let the slider images shine, and in the footer to prevent overlapping
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrolled > window.innerHeight * 0.65 && scrolled < maxScroll - 400) {
+          canvas.style.opacity = '0.9';
+          canvas.style.pointerEvents = 'auto';
+        } else {
+          canvas.style.opacity = '0';
+          canvas.style.pointerEvents = 'none';
+        }
+      }
     });
 
     // 3. RESPONSIVE HAMBURGER NAVIGATION DRAWER
@@ -121,7 +145,7 @@
     });
 
     // Add hover effects for interactive elements
-    const hoverables = document.querySelectorAll('a, button, select, input, textarea, .service-card, .accordion-trigger, .tech-card, .slider-handle');
+    const hoverables = document.querySelectorAll('a, button, select, input, textarea, .service-card, .accordion-trigger, .tech-card, .slider-handle, .calc-checkmark, #calc-3d-canvas');
     hoverables.forEach(item => {
       item.addEventListener('mouseenter', () => {
         follower.classList.add('hovering');
@@ -219,6 +243,17 @@
           }, 6000);
         });
       });
+    }
+
+    // 9. HERO BACKGROUND CAROUSEL AUTO-PLAY LOGIC
+    const heroSlides = document.querySelectorAll('.hero-bg-carousel .slide');
+    if (heroSlides.length > 0) {
+      let currentHeroIndex = 0;
+      setInterval(() => {
+        heroSlides[currentHeroIndex].classList.remove('active');
+        currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
+        heroSlides[currentHeroIndex].classList.add('active');
+      }, 5000);
     }
   });
 })();

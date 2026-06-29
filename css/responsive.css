@@ -59,14 +59,20 @@
   
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 50px;
+    grid-template-areas: 
+      "headings"
+      "form"
+      "details";
+    gap: 36px;
   }
   
-  .hero-left {
+  .hero-headings,
+  .hero-details {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
   
   .hero-sub {
@@ -81,6 +87,7 @@
   
   .hero-stats {
     justify-content: center;
+    width: 100%;
   }
   
   /* Why Choose Us section */
@@ -105,9 +112,15 @@
   }
   
   /* Contact section split */
-  .contact-grid {
+  .contact-section-grid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  /* FAQ section split */
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
   }
   
   /* FAQ Split */
@@ -189,9 +202,27 @@
     gap: 24px;
   }
   
-  .process-timeline {
+  .process-steps {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  /* Testimonials responsiveness */
+  .testimonials-slider-wrapper {
+    min-height: auto;
+    padding-bottom: 20px;
+  }
+
+  .testimonial-slide .glass-card {
+    padding: 24px 16px;
+  }
+
+  .testimonial-stars {
+    justify-content: center;
+  }
+
+  .map-wrapper {
+    height: 260px;
   }
 
   .footer-grid {
@@ -279,63 +310,31 @@
     aspect-ratio: 1 / 1; /* Square for small screen compatibility */
   }
   
+  /* Floating CTA Mobile Positioning */
+  .float-call {
+    left: 16px !important;
+    right: auto !important;
+    bottom: 16px !important;
+  }
+  
   .float-wa {
-    bottom: 80px; /* Offset to avoid blocking the sticky bar */
-    right: 20px;
+    right: 16px !important;
+    left: auto !important;
+    bottom: 16px !important;
+  }
+  
+  .floating-btn {
     width: 48px;
     height: 48px;
   }
   
-  .float-wa svg {
-    width: 24px;
-    height: 24px;
+  .floating-btn svg {
+    width: 20px;
+    height: 20px;
   }
-  
-  /* Sticky mobile conversion footer */
-  .mobile-cta-sticky {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-glass-heavy);
-    backdrop-filter: var(--backdrop-blur);
-    -webkit-backdrop-filter: var(--backdrop-blur);
-    border-top: 1px solid var(--border-glass);
-    padding: 12px 16px;
-    display: flex;
-    gap: 12px;
-    z-index: 98;
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  .mobile-cta-sticky a {
-    flex: 1;
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 12px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-  
-  .mobile-cta-call {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: var(--white);
-  }
-  
-  .mobile-cta-wa {
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: var(--white);
-  }
-  
+
   body {
-    padding-bottom: 60px; /* Space for the sticky bar */
+    padding-bottom: 0; /* Remove old sticky bar bottom spacing */
   }
   
   /* Adjust form padding for tiny viewports */

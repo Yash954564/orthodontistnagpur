@@ -122,29 +122,57 @@
   // Interactive 3D Model: Stylized Dental implant / tooth structure to be showcased
   const toothGroup = new THREE.Group();
   const toothMat = new THREE.MeshPhysicalMaterial({
-    color: 0xffffff,
+    color: 0xe0f7fa, // Soft cyan-tinted white to match dental branding
     metalness: 0.1,
-    roughness: 0.1,
-    transmission: 0.9,
-    ior: 1.5,
+    roughness: 0.15,
+    transmission: 0.75, // Translucency balance
+    ior: 1.55,
     transparent: true,
-    opacity: 0.9,
-    clearcoat: 1.0
+    opacity: 0.95,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.1
   });
 
-  const crownGeo = new THREE.TorusKnotGeometry(1.6, 0.5, 100, 16, 2, 3);
-  const crown = new THREE.Mesh(crownGeo, toothMat);
-  toothGroup.add(crown);
+  // Molar Crown Base (rounded cylinder base)
+  const crownBaseGeo = new THREE.CylinderGeometry(1.4, 1.1, 1.4, 32);
+  const crownBase = new THREE.Mesh(crownBaseGeo, toothMat);
+  crownBase.position.y = 0.1;
+  toothGroup.add(crownBase);
 
-  const rootGeo = new THREE.ConeGeometry(0.5, 2.2, 8);
+  // 4 Cusps of the Molar (positioned at top corners of the base)
+  const cuspGeo = new THREE.SphereGeometry(0.52, 24, 24);
+  
+  const cuspFL = new THREE.Mesh(cuspGeo, toothMat);
+  cuspFL.position.set(-0.5, 0.7, -0.5);
+  cuspFL.scale.set(1, 1.2, 1);
+  toothGroup.add(cuspFL);
+
+  const cuspFR = new THREE.Mesh(cuspGeo, toothMat);
+  cuspFR.position.set(0.5, 0.7, -0.5);
+  cuspFR.scale.set(1, 1.2, 1);
+  toothGroup.add(cuspFR);
+
+  const cuspBL = new THREE.Mesh(cuspGeo, toothMat);
+  cuspBL.position.set(-0.5, 0.7, 0.5);
+  cuspBL.scale.set(1, 1.2, 1);
+  toothGroup.add(cuspBL);
+
+  const cuspBR = new THREE.Mesh(cuspGeo, toothMat);
+  cuspBR.position.set(0.5, 0.7, 0.5);
+  cuspBR.scale.set(1, 1.2, 1);
+  toothGroup.add(cuspBR);
+
+  // Roots of the Molar
+  const rootGeo = new THREE.ConeGeometry(0.48, 2.0, 16);
+  
   const rootL = new THREE.Mesh(rootGeo, toothMat);
-  rootL.position.set(-0.8, -1.8, 0);
-  rootL.rotation.z = 0.22;
+  rootL.position.set(-0.5, -1.3, 0);
+  rootL.rotation.z = 0.18;
   toothGroup.add(rootL);
 
   const rootR = new THREE.Mesh(rootGeo, toothMat);
-  rootR.position.set(0.8, -1.8, 0);
-  rootR.rotation.z = -0.22;
+  rootR.position.set(0.5, -1.3, 0);
+  rootR.rotation.z = -0.18;
   toothGroup.add(rootR);
 
   // Default positioning for Hero section
@@ -208,4 +236,161 @@
 
   // Expose refs for GSAP ScrollTrigger
   window.toothScene = { scene, camera, toothGroup, renderer };
+
+  // ==========================================================================
+  // SECONDARY 3D SCENE - Interactive Calculator Molar Preview
+  // ==========================================================================
+  const calcCanvas = document.getElementById('calc-3d-canvas');
+  if (calcCanvas) {
+    const calcWidth = calcCanvas.parentElement.clientWidth || 300;
+    const calcHeight = calcCanvas.parentElement.clientHeight || 280;
+
+    const calcRenderer = new THREE.WebGLRenderer({ canvas: calcCanvas, alpha: true, antialias: true });
+    calcRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    calcRenderer.setSize(calcWidth, calcHeight);
+
+    const calcScene = new THREE.Scene();
+
+    const calcCamera = new THREE.PerspectiveCamera(45, calcWidth / calcHeight, 0.1, 100);
+    calcCamera.position.set(0, 0, 7.5);
+
+    const calcAmbient = new THREE.AmbientLight(0xffffff, 0.7);
+    calcScene.add(calcAmbient);
+
+    const calcDirLight = new THREE.DirectionalLight(0x00b4d8, 3.0);
+    calcDirLight.position.set(5, 5, 5);
+    calcScene.add(calcDirLight);
+
+    const calcDirLight2 = new THREE.DirectionalLight(0x0077b6, 2.0);
+    calcDirLight2.position.set(-5, -5, 3);
+    calcScene.add(calcDirLight2);
+
+    const calcToothGroup = new THREE.Group();
+    calcScene.add(calcToothGroup);
+
+    // Physical Glassy Translucent Material
+    const calcToothMat = new THREE.MeshPhysicalMaterial({
+      color: 0x90e0ef, // Soft cyan glass matching calculator theme
+      metalness: 0.1,
+      roughness: 0.1,
+      transmission: 0.9,
+      ior: 1.5,
+      transparent: true,
+      opacity: 0.85,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.05
+    });
+
+    const calcCrownBaseGeo = new THREE.CylinderGeometry(1.2, 0.95, 1.2, 32);
+    const calcCrownBase = new THREE.Mesh(calcCrownBaseGeo, calcToothMat);
+    calcCrownBase.position.y = 0.1;
+    calcToothGroup.add(calcCrownBase);
+
+    const calcCuspGeo = new THREE.SphereGeometry(0.46, 24, 24);
+    const cuspFL = new THREE.Mesh(calcCuspGeo, calcToothMat);
+    cuspFL.position.set(-0.4, 0.6, -0.4);
+    cuspFL.scale.set(1, 1.2, 1);
+    calcToothGroup.add(cuspFL);
+
+    const cuspFR = new THREE.Mesh(calcCuspGeo, calcToothMat);
+    cuspFR.position.set(0.4, 0.6, -0.4);
+    cuspFR.scale.set(1, 1.2, 1);
+    calcToothGroup.add(cuspFR);
+
+    const cuspBL = new THREE.Mesh(calcCuspGeo, calcToothMat);
+    cuspBL.position.set(-0.4, 0.6, 0.4);
+    cuspBL.scale.set(1, 1.2, 1);
+    calcToothGroup.add(cuspBL);
+
+    const cuspBR = new THREE.Mesh(calcCuspGeo, calcToothMat);
+    cuspBR.position.set(0.4, 0.6, 0.4);
+    cuspBR.scale.set(1, 1.2, 1);
+    calcToothGroup.add(cuspBR);
+
+    const calcRootGeo = new THREE.ConeGeometry(0.4, 1.6, 16);
+    const rootL = new THREE.Mesh(calcRootGeo, calcToothMat);
+    rootL.position.set(-0.4, -1.0, 0);
+    rootL.rotation.z = 0.15;
+    calcToothGroup.add(rootL);
+
+    const rootR = new THREE.Mesh(calcRootGeo, calcToothMat);
+    rootR.position.set(0.4, -1.0, 0);
+    rootR.rotation.z = -0.15;
+    calcToothGroup.add(rootR);
+
+    // Interactive Drag Mechanics
+    let isDragging = false;
+    let previousMouseX = 0;
+    let previousMouseY = 0;
+    let autoRotationSpeed = 0.015;
+
+    calcCanvas.addEventListener('mousedown', e => {
+      isDragging = true;
+      previousMouseX = e.clientX;
+      previousMouseY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    calcCanvas.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - previousMouseX;
+      const deltaY = e.clientY - previousMouseY;
+
+      calcToothGroup.rotation.y += deltaX * 0.01;
+      calcToothGroup.rotation.x += deltaY * 0.01;
+
+      previousMouseX = e.clientX;
+      previousMouseY = e.clientY;
+      autoRotationSpeed = 0; // stop auto rotating once user drags
+    });
+
+    // Touch support for mobile
+    calcCanvas.addEventListener('touchstart', e => {
+      isDragging = true;
+      previousMouseX = e.touches[0].clientX;
+      previousMouseY = e.touches[0].clientY;
+    });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    calcCanvas.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      const deltaX = e.touches[0].clientX - previousMouseX;
+      const deltaY = e.touches[0].clientY - previousMouseY;
+
+      calcToothGroup.rotation.y += deltaX * 0.01;
+      calcToothGroup.rotation.x += deltaY * 0.01;
+
+      previousMouseX = e.touches[0].clientX;
+      previousMouseY = e.touches[0].clientY;
+      autoRotationSpeed = 0;
+    });
+
+    function calcAnimate() {
+      requestAnimationFrame(calcAnimate);
+      
+      // Auto rotate if not dragged
+      if (!isDragging && autoRotationSpeed > 0) {
+        calcToothGroup.rotation.y += autoRotationSpeed;
+        calcToothGroup.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+      }
+      
+      calcRenderer.render(calcScene, calcCamera);
+    }
+    calcAnimate();
+
+    // Resize handler for calculator canvas
+    window.addEventListener('resize', () => {
+      const w = calcCanvas.parentElement.clientWidth || 300;
+      const h = calcCanvas.parentElement.clientHeight || 280;
+      calcRenderer.setSize(w, h);
+      calcCamera.aspect = w / h;
+      calcCamera.updateProjectionMatrix();
+    });
+  }
 })();
