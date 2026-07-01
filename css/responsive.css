@@ -4,6 +4,7 @@
 
 /* Cursor optimization: Disable custom cursor on touch devices */
 @media (hover: none) or (max-width: 1024px) {
+
   .custom-cursor,
   .custom-cursor-follower {
     display: none !important;
@@ -22,15 +23,15 @@
   .container {
     max-width: 960px;
   }
-  
+
   .hero-grid {
     gap: 40px;
   }
-  
+
   .services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .tech-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -41,76 +42,112 @@
   .container {
     max-width: 720px;
   }
-  
+
   section {
     padding: 80px 0;
   }
-  
+
   /* Header adjustments */
   header.sticky-nav {
-    top: 0; /* Align to top if topbar is hidden or stacked */
+    top: 0;
+    /* Align to top if topbar is hidden or stacked */
   }
-  
+
   /* Hero section adjustments */
   #hero {
-    padding-top: 140px;
+    padding-top: 50px;
     min-height: auto;
   }
-  
+
   .hero-grid {
-    grid-template-columns: 1fr;
-    grid-template-areas: 
-      "headings"
-      "form"
-      "details";
-    gap: 36px;
-  }
-  
-  .hero-headings,
-  .hero-details {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 32px;
+  }
+
+  .hero-headings {
+    display: contents;
+  }
+
+  .hero-details {
+    display: contents;
+  }
+
+  .hero-title {
+    order: 1;
+    text-align: center;
     width: 100%;
   }
-  
+
+  .hero-right {
+    order: 2;
+    width: 100%;
+  }
+
   .hero-sub {
+    order: 3;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .hero-buttons {
-    justify-content: center;
-  }
-  
-  .hero-stats {
-    justify-content: center;
+    margin: 16px auto !important;
+    text-align: center;
     width: 100%;
   }
-  
+
+  .hero-social-proof {
+    order: 4;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .section-tag-row {
+    order: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .hero-buttons {
+    order: 6;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .hero-stats {
+    order: 7;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
   /* Why Choose Us section */
   .why-grid {
     grid-template-columns: 1fr;
     gap: 50px;
   }
-  
+
   .why-right {
     order: -1;
   }
-  
+
   /* Doctor section split adjustments */
   .doctor-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .doctor-img-container {
     max-width: 420px;
     margin: 0 auto;
   }
-  
+
   /* Contact section split */
   .contact-section-grid {
     grid-template-columns: 1fr;
@@ -122,7 +159,7 @@
     grid-template-columns: 1fr;
     gap: 35px;
   }
-  
+
   /* FAQ Split */
   .faq-accordion {
     max-width: 100%;
@@ -139,15 +176,15 @@
   .container {
     padding: 0 20px;
   }
-  
+
   header.sticky-nav {
     height: 70px;
   }
-  
+
   .hamburger {
     display: flex;
   }
-  
+
   /* Mobile Navigation Drawer */
   .nav-links {
     position: fixed;
@@ -165,20 +202,21 @@
     z-index: 104;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
   }
-  
+
   .nav-links.active {
     right: 0;
   }
-  
+
   .nav-right .btn {
-    display: none; /* Hide topbar call button on mobile */
+    display: none;
+    /* Hide topbar call button on mobile */
   }
-  
+
   /* Mobile Menu Body Class */
   body.menu-open {
     overflow: hidden;
   }
-  
+
   body.menu-open::before {
     content: '';
     position: fixed;
@@ -187,21 +225,39 @@
     backdrop-filter: blur(8px);
     z-index: 103;
   }
-  
-  /* Grids to Single Column */
+
+  /* Services Grid to Horizontal Snapping Card Slider */
   .services-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 10px 20px 24px 20px;
+    margin: 0 -20px;
+    scrollbar-width: none; /* Firefox */
   }
   
+  .services-grid::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  
+  .services-grid .service-card {
+    flex: 0 0 290px;
+    max-width: 82vw;
+    scroll-snap-align: center;
+    height: auto;
+  }
+
   .tech-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .testimonials-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .process-steps {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -243,28 +299,51 @@
     gap: 10px;
     text-align: center;
   }
-  
+
   /* Before/After Slider aspect ratio */
   .slider-container {
     aspect-ratio: 4 / 3;
   }
-  
+
   /* Visual Ring scale */
   .visual-ring {
     transform: scale(0.9);
   }
-  
+
   /* Footer layout */
   .footer-container {
     flex-direction: column;
     text-align: center;
     gap: 24px;
   }
-  
+
   .footer-links {
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px 24px;
+  }
+
+  /* Form & Input Elements mobile layout formatting */
+  .form-card {
+    padding: 24px 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .form-group,
+  .form-group.full {
+    grid-column: span 1 !important;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 100%;
   }
 }
 
@@ -273,75 +352,77 @@
   section {
     padding: 60px 0;
   }
-  
+
   .section-title {
     font-size: 26px;
   }
-  
+
   .hero-title {
     font-size: 32px;
   }
-  
+
   .hero-stats {
     flex-direction: column;
     gap: 20px;
     align-items: center;
   }
-  
+
   .stat-item {
     text-align: center;
   }
-  
+
   .btn {
     width: 100%;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .visual-ring {
     transform: scale(0.75);
     margin: 0 auto;
   }
-  
+
   .slider-container {
-    aspect-ratio: 1 / 1; /* Square for small screen compatibility */
+    aspect-ratio: 1 / 1;
+    /* Square for small screen compatibility */
   }
-  
+
   /* Floating CTA Mobile Positioning */
   .float-call {
     left: 16px !important;
     right: auto !important;
     bottom: 16px !important;
   }
-  
+
   .float-wa {
     right: 16px !important;
     left: auto !important;
     bottom: 16px !important;
   }
-  
+
   .floating-btn {
     width: 48px;
     height: 48px;
   }
-  
+
   .floating-btn svg {
     width: 20px;
     height: 20px;
   }
 
   body {
-    padding-bottom: 0; /* Remove old sticky bar bottom spacing */
+    padding-bottom: 0;
+    /* Remove old sticky bar bottom spacing */
   }
-  
+
   /* Adjust form padding for tiny viewports */
   .form-card {
     padding: 24px 20px;
   }
-  
+
   .form-grid {
     grid-template-columns: 1fr;
   }

@@ -51,11 +51,16 @@
       // Tell three-scene.js that GSAP will override tooth animation coordinates
       window.gsapOverrideActive = true;
 
-      // Ensure tooth group is loaded before adding scroll bindings
+      // Ensure tooth group is loaded before adding scroll bindings (exit after 5s if not loaded)
+      let checkCount = 0;
       const checkToothLoaded = setInterval(() => {
+        checkCount++;
         if (window.toothScene && window.toothScene.toothGroup) {
           clearInterval(checkToothLoaded);
           setupToothScrollAnimations();
+        } else if (checkCount > 50) {
+          clearInterval(checkToothLoaded);
+          console.warn("GSAP: Tooth 3D scene not loaded or WebGL disabled. Skipping scroll animation.");
         }
       }, 100);
 
@@ -131,17 +136,20 @@
       revealTargets.forEach(target => {
         const elements = document.querySelectorAll(target);
         elements.forEach(el => {
-          gsap.from(el, {
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none none'
-            },
-            opacity: 0,
-            y: 40,
-            duration: 0.8,
-            ease: 'power3.out'
-          });
+          // Skip opacity/y-translate reveals on mobile viewport to guarantee rendering and prevent ScrollTrigger issues
+          if (window.innerWidth > 768) {
+            gsap.from(el, {
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+              },
+              opacity: 0,
+              y: 40,
+              duration: 0.8,
+              ease: 'power3.out'
+            });
+          }
         });
       });
     }

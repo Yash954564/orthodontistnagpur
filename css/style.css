@@ -681,6 +681,7 @@ header.sticky-nav.scrolled {
 
 /* HERO FORM CARD */
 .hero-right {
+  grid-area: form;
   position: relative;
   z-index: 2;
 }
@@ -1837,4 +1838,56 @@ footer {
   .calc-canvas-container {
     height: 240px;
   }
+}
+
+/* Futuristic Technology Showcase Cards */
+.tech-card {
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              border-color 0.4s ease, 
+              box-shadow 0.4s ease, 
+              background 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 180, 216, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.tech-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--primary);
+  box-shadow: 0 15px 30px rgba(0, 180, 216, 0.15), 0 0 15px rgba(0, 180, 216, 0.1) !important;
+  background: var(--bg-glass-heavy) !important;
+}
+
+.tech-card:hover::before {
+  opacity: 1;
+}
+
+.tech-card-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 180, 216, 0.05);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  margin-bottom: 20px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.tech-card:hover .tech-card-icon {
+  background: var(--primary);
+  color: white;
 }

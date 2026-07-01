@@ -24,6 +24,7 @@
         
         handle.style.left = `${percentage}%`;
         afterImg.style.clipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
+        afterImg.style.WebkitClipPath = `polygon(${percentage}% 0, 100% 0, 100% 100%, ${percentage}% 100%)`;
       };
 
       // Mouse Events
@@ -80,6 +81,7 @@
           // Reset slider handle position back to 50%
           handle.style.left = '50%';
           afterImg.style.clipPath = 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)';
+          afterImg.style.WebkitClipPath = 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)';
         });
       });
     }

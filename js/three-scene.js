@@ -13,7 +13,14 @@
   if (!canvas) return;
 
   // Renderer Setup
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  } catch (error) {
+    console.error('WebGL is not supported or failed to initialize:', error);
+    canvas.style.display = 'none';
+    return;
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -245,7 +252,14 @@
     const calcWidth = calcCanvas.parentElement.clientWidth || 300;
     const calcHeight = calcCanvas.parentElement.clientHeight || 280;
 
-    const calcRenderer = new THREE.WebGLRenderer({ canvas: calcCanvas, alpha: true, antialias: true });
+    let calcRenderer;
+    try {
+      calcRenderer = new THREE.WebGLRenderer({ canvas: calcCanvas, alpha: true, antialias: true });
+    } catch (error) {
+      console.error('WebGL is not supported or failed for calculator canvas:', error);
+      calcCanvas.style.display = 'none';
+      return;
+    }
     calcRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     calcRenderer.setSize(calcWidth, calcHeight);
 

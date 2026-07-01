@@ -7,19 +7,22 @@
     // 1. PRELOADER ANIMATION
     const preloader = document.getElementById('preloader');
     if (preloader) {
+      const hidePreloader = () => {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+      };
+
       window.addEventListener('load', () => {
-        setTimeout(() => {
-          preloader.style.opacity = '0';
-          preloader.style.visibility = 'hidden';
-        }, 650);
+        setTimeout(hidePreloader, 650);
       });
+
       // Fallback if load event has already fired
       if (document.readyState === 'complete') {
-        setTimeout(() => {
-          preloader.style.opacity = '0';
-          preloader.style.visibility = 'hidden';
-        }, 650);
+        setTimeout(hidePreloader, 650);
       }
+
+      // Max safety timeout (2.5 seconds) to prevent loader getting stuck on slow connections/mobile
+      setTimeout(hidePreloader, 2500);
     }
 
     // 2. SCROLL PROGRESS INDICATOR & STICKY NAV SCROLL CLASS
@@ -254,6 +257,51 @@
         currentHeroIndex = (currentHeroIndex + 1) % heroSlides.length;
         heroSlides[currentHeroIndex].classList.add('active');
       }, 5000);
+    }
+    // 10. TREATMENTS CAROUSEL AUTO-PLAY LOGIC (MOBILE VIEWPORTS ONLY)
+    const servicesGrid = document.querySelector('.services-grid');
+    if (servicesGrid) {
+      let servicesInterval;
+      
+      const startServicesAutoPlay = () => {
+        servicesInterval = setInterval(() => {
+          if (window.innerWidth > 768) return; // Only auto-scroll on mobile viewports
+
+          const cardWidth = servicesGrid.querySelector('.service-card')?.offsetWidth || 290;
+          const gapWidth = 16; // matching css gap
+          const step = cardWidth + gapWidth;
+          
+          const maxScrollLeft = servicesGrid.scrollWidth - servicesGrid.clientWidth;
+          
+          // If close to or at the end, wrap back to 0, otherwise scroll to next card
+          if (servicesGrid.scrollLeft >= maxScrollLeft - 10) {
+            servicesGrid.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            servicesGrid.scrollBy({ left: step, behavior: 'smooth' });
+          }
+        }, 5000);
+      };
+
+      const stopServicesAutoPlay = () => {
+        clearInterval(servicesInterval);
+      };
+
+      // Start auto play
+      startServicesAutoPlay();
+
+      // Pause auto-scroll when user interacts with the slider manually
+      servicesGrid.addEventListener('touchstart', stopServicesAutoPlay);
+      servicesGrid.addEventListener('mousedown', stopServicesAutoPlay);
+      
+      // Resume auto-scroll when interaction ends
+      servicesGrid.addEventListener('touchend', () => {
+        stopServicesAutoPlay();
+        startServicesAutoPlay();
+      });
+      servicesGrid.addEventListener('mouseup', () => {
+        stopServicesAutoPlay();
+        startServicesAutoPlay();
+      });
     }
   });
 })();
